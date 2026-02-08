@@ -1,45 +1,40 @@
 import { motion } from "motion/react";
 import { Giggles } from "./Giggles";
-import { AvatarGuide } from "./AvatarGuide";
-import { UserCircle } from "lucide-react";
 
-interface HomeScreenProps {
-  onNavigate: (screen: string, subject?: string) => void;
+interface AgeSelectionScreenProps {
+  onSelectAge: (ageGroup: string) => void;
 }
 
-export function HomeScreen({ onNavigate }: HomeScreenProps) {
-  const subjects = [
+export function AgeSelectionScreen({ onSelectAge }: AgeSelectionScreenProps) {
+  const ageGroups = [
     {
-      title: "MATHS MAGIC",
-      gradient: "linear-gradient(145deg, #FF9966 0%, #FFD93D 100%)",
-      icon: "🔢",
-      description: "Numbers & Counting!",
-      screen: "mathCatalog",
-      subject: "maths"
+      range: "3-4",
+      title: "Little Explorer",
+      emoji: "🐣",
+      color: "linear-gradient(145deg, #FFD93D 0%, #FFA500 100%)",
+      description: "First steps in learning!"
     },
     {
-      title: "ENGLISH FUN",
-      gradient: "linear-gradient(145deg, #FF6EC7 0%, #FF8ED5 100%)",
-      icon: "📚",
-      description: "Stories & Letters!",
-      screen: "explore",
-      subject: "english"
+      range: "5-6",
+      title: "Young Learner",
+      emoji: "🌟",
+      color: "linear-gradient(145deg, #FF6EC7 0%, #A855F7 100%)",
+      description: "Ready for adventure!"
     },
     {
-      title: "MY WORLD",
-      gradient: "linear-gradient(145deg, #7ED321 0%, #A8E063 100%)",
-      icon: "🌍",
-      description: "Explore & Discover!",
-      screen: "explore",
-      subject: "world"
-    },
+      range: "7-8",
+      title: "Super Student",
+      emoji: "🚀",
+      color: "linear-gradient(145deg, #4A90E2 0%, #7ED321 100%)",
+      description: "Let's explore more!"
+    }
   ];
 
   return (
     <div className="w-full h-full relative overflow-hidden flex items-center justify-center" style={{
       background: "linear-gradient(180deg, #FFE66D 0%, #A8E063 50%, #87CEEB 100%)"
     }}>
-      {/* Cocomelon-style floating elements */}
+      {/* Floating decorations */}
       {[...Array(15)].map((_, i) => (
         <motion.div
           key={`float-${i}`}
@@ -59,40 +54,8 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         </motion.div>
       ))}
 
-      {/* Avatar Guide */}
-      <AvatarGuide
-        message="Pick any subject you want to learn! Maths is super fun today! 🎯"
-        suggestions={[
-          { text: "🧮 Learn Maths Magic", action: () => onNavigate("explore") },
-          { text: "📚 Try English Fun", action: () => onNavigate("explore") },
-          { text: "🌍 Explore My World", action: () => onNavigate("explore") },
-        ]}
-        position="float"
-      />
-
-      {/* Top right - Parent Zone icon */}
-      <motion.button
-        onClick={() => onNavigate("parent")}
-        className="absolute top-8 right-8 z-10 flex items-center gap-3 px-8 py-5 text-white font-bold text-2xl"
-        style={{
-          background: "linear-gradient(145deg, #A881E8 0%, #8E44AD 100%)",
-          borderRadius: "40px",
-          boxShadow: `
-            0 12px 30px rgba(168, 129, 232, 0.5),
-            inset 0 -4px 10px rgba(0,0,0,0.15),
-            inset 0 4px 10px rgba(255,255,255,0.4)
-          `,
-          border: "5px solid rgba(255,255,255,0.5)",
-        }}
-        whileHover={{ scale: 1.08, y: -3 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <UserCircle className="w-8 h-8" />
-        Parent Zone
-      </motion.button>
-
-      <div className="w-full h-full flex flex-col items-center justify-center px-12 py-8 gap-10">
-        {/* Header with Giggles - Cocomelon style */}
+      <div className="w-full h-full flex flex-col items-center justify-center px-12 py-8 gap-12">
+        {/* Header */}
         <motion.div
           className="flex items-center gap-8"
           initial={{ y: -40, opacity: 0 }}
@@ -108,27 +71,27 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
               textShadow: "0 6px 15px rgba(0,0,0,0.1)",
               letterSpacing: "0.04em"
             }}>
-              MY ADVENTURES!
+              HOW OLD ARE YOU?
             </h1>
-            <p className="text-3xl font-bold text-white" style={{
+            <p className="text-4xl font-bold text-white" style={{
               textShadow: "0 4px 10px rgba(0,0,0,0.2)"
             }}>
-              What do you want to learn today? 🎉
+              Choose your age to get started! 🎉
             </p>
           </div>
         </motion.div>
 
-        {/* Three subject cards - Cocomelon bright style */}
+        {/* Age cards */}
         <div className="flex gap-10 items-center justify-center">
-          {subjects.map((subject, index) => (
-            <motion.div
-              key={subject.title}
-              onClick={() => onNavigate(subject.screen, subject.subject)}
-              className="relative cursor-pointer flex flex-col items-center justify-center"
+          {ageGroups.map((group, index) => (
+            <motion.button
+              key={group.range}
+              onClick={() => onSelectAge(group.range)}
+              className="relative flex flex-col items-center justify-center"
               style={{
-                width: "360px",
-                height: "440px",
-                background: subject.gradient,
+                width: "380px",
+                height: "480px",
+                background: group.color,
                 borderRadius: "60px",
                 boxShadow: `
                   0 25px 55px rgba(0,0,0,0.25),
@@ -143,7 +106,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
               whileHover={{ scale: 1.1, y: -15 }}
               whileTap={{ scale: 0.98 }}
             >
-              {/* Icon bubble - bigger and friendlier */}
+              {/* Emoji */}
               <motion.div
                 className="flex items-center justify-center text-9xl mb-6"
                 style={{
@@ -162,25 +125,30 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                   transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
                 }}
               >
-                {subject.icon}
+                {group.emoji}
               </motion.div>
 
-              {/* Text content */}
+              {/* Age range */}
               <div className="text-center px-6">
-                <h2 className="text-5xl font-bold text-white mb-4" style={{
+                <div className="text-7xl font-bold text-white mb-4" style={{
                   textShadow: "0 5px 15px rgba(0,0,0,0.3)",
                   letterSpacing: "0.05em"
                 }}>
-                  {subject.title}
+                  {group.range}
+                </div>
+                <h2 className="text-4xl font-bold text-white mb-3" style={{
+                  textShadow: "0 4px 12px rgba(0,0,0,0.25)"
+                }}>
+                  {group.title}
                 </h2>
-                <p className="text-3xl font-bold text-white/95" style={{
+                <p className="text-2xl font-bold text-white/95" style={{
                   textShadow: "0 3px 8px rgba(0,0,0,0.25)"
                 }}>
-                  {subject.description}
+                  {group.description}
                 </p>
               </div>
 
-              {/* Stronger shine effect */}
+              {/* Shine effect */}
               <div
                 className="absolute top-10 left-10 pointer-events-none"
                 style={{
@@ -191,7 +159,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                 }}
               />
 
-              {/* Bouncing stars around card */}
+              {/* Floating star */}
               <motion.div
                 className="absolute -top-6 -right-6 text-6xl"
                 animate={{
@@ -202,7 +170,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
               >
                 ⭐
               </motion.div>
-            </motion.div>
+            </motion.button>
           ))}
         </div>
       </div>

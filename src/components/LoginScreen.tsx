@@ -84,7 +84,7 @@ export function LoginScreen({ onNavigate }: LoginScreenProps) {
         {/* Action buttons */}
         <div className="flex flex-col gap-5 w-full">
           <motion.button
-            onClick={() => onNavigate("home")}
+            onClick={() => onNavigate("ageSelect")}
             className="px-16 py-8 text-white text-4xl font-bold tracking-wide"
             style={{
               background: currentTheme.gradients.button1,
